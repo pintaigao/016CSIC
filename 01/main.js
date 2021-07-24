@@ -1,59 +1,65 @@
-const fs = require('fs');
-const csv = require('csv-parser');
+/**
+ * README:
+ * 1. Open terminal, and cd path to folder, run npm install
+ * 2. run "node main.js random_numbers.csv" in terminal¥
+ * 3. Result will be shown
+ **/
 
 class NumberDealer {
-  constructor(numberList) {
-    this.numberLiset = numberList;
-    this.maxNumber = Number.MIN_SAFE_INTEGER;
-    this.minNumber = Number.MAX_SAFE_INTEGER;
-    this.data = [];
+  constructor(data) {
+    this.data = data;
+    this.upperBound = Number.MIN_SAFE_INTEGER;
+    this.lowBound = Number.MAX_SAFE_INTEGER;
   }
   
-  findMaxNumber(index) {
+  findUpperBound(index) {
     if (index < this.data.length) {
-      if (this.data[index] > this.maxNumber) {
-        this.maxNumber = this.data[index];
+      if (this.data[index] > this.upperBound) {
+        this.upperBound = this.data[index];
       }
     }
     
     if (index === this.data.length) {
-      console.log(this.maxNumber);
-      return this.maxNumber;
+      console.log("The Maximum Number is:");
+      console.log(this.upperBound);
+      return this.upperBound;
     }
     
-    this.findMaxNumber(index + 1);
+    this.findUpperBound(index + 1);
   }
   
-  findMinNumber() {
+  findLowerBound() {
     for (let i = 0; i < this.data.length; i++) {
-      if(this.data[i] < this.minNumber) {
-        this.minNumber = this.data[i];
+      if(this.data[i] < this.lowBound) {
+        this.lowBound = this.data[i];
       }
     }
-  
-    console.log(this.minNumber);
-    return this.minNumber;
+    console.log("The Lower Bound is:");
+    console.log(this.lowBound);
+    return this.lowBound;
   }
   
-  execute() {
+  main() {
+    let fs = require('fs');
+    let csv = require('fast-csv');
+    
     let filePath = process.argv[2];
     
-    let csv = require('fast-csv');
     
     var stream = fs.createReadStream(filePath);
     
     csv.parseStream(stream)
       .on("data", (data) => {
         this.data = data;
-        console.log(data)
       })
       .on("end", () => {
-        // 1. Execute find max method
-        this.findMaxNumber(0);
-        this.findMinNumber();
+        // find max number
+        this.findUpperBound(0);
+        // find min number
+        this.findLowerBound();
       });
   }
 }
 
-let instance = new NumberDealer([1, 2, 3]);
-instance.execute();
+let instance = new NumberDealer();
+instance.main();

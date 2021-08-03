@@ -1,16 +1,14 @@
 {
-  "name": "01",
+  "name": "assignment-0",
   "version": "1.0.0",
-  "description": "",
+  "description": "Assignment 0: Programming Assessment",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Pintaigao He",
   "license": "ISC",
   "dependencies": {
-    "csv-parser": "^3.0.0",
-    "dom-to-image": "^2.6.0",
     "fast-csv": "^4.3.6"
   }
 }

@@ -5,28 +5,32 @@ class PriorityQueue {
     this.heap = new Heap();
   }
   
-  enqueue(priority, value) {
-    return this.heap.insert(priority, value)
+  enqueue(value) {
+    return this.heap.insert(value)
   }
   
   peak() {
-    return this.heap.root.value
+    console.log(`The peak is: ${this.heap.root.value}`)
   }
   
   dequeue() {
-    return this.heap.pop()
+    this.heap.pop()
   }
   
   size() {
-    return this.heap.size
+    console.log(`The size is: ${this.heap.size}`)
   }
   
   printHeap() {
-    console.log(`The Heap is: ${this.heap.heap}`);
+    console.log(`The Heap is: ${this.heap.printHeap()}`);
   }
   
   isEmpty() {
-    return this.heap.size === 0
+    if (this.heap.size === 0) {
+      console.log("The Heap is Empty")
+    } else {
+      console.log("The Heap is not Empty")
+    }
   }
 }
 
@@ -36,30 +40,28 @@ const readline = require('readline').createInterface({
 })
 let pq = new PriorityQueue();
 
-readline.setPrompt('What would you like to do? \n 1.Enqueue \n 2.Dequeue \n 3.Print Size \n 4.Print Peak \n 5.Is Empty \n 6.Print Heap \n 7.Exit \n');
+readline.setPrompt('What would you like to do? \n 1.Enqueue \n 2.Dequeue \n 3.Print-Size \n 4.Print-Peak \n 5.Is-Empty \n 6.Print-Heap \n 7.Exit \n');
 readline.prompt();
 readline.on('line', function (line) {
   let command = line.trim().split(" ")[0];
   let params = line.trim().split(" ")[1];
   switch (command) {
     case 'Enqueue':
-      const priority = params.split(",")[0]
-      const value = params.split(",")[1]
-      pq.enqueue(priority, value);
+      pq.enqueue(parseInt(params));
       break;
     case 'Dequeue':
       pq.dequeue();
       break
-    case 'Print Size':
+    case 'Print-Size':
       pq.size();
       break;
-    case 'Print Peak':
+    case 'Print-Peak':
       console.log("Peak is:" + pq.peak())
       break;
-    case 'Is Empty':
+    case 'Is-Empty':
       pq.isEmpty()
       break;
-    case 'Print Heap':
+    case 'Print-Heap':
       pq.printHeap()
       break;
     case 'Exit':
